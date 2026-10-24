@@ -24,14 +24,18 @@ export default function SearchBox({ onSelect }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState(null);
   const [failed, setFailed] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const q = query.trim();
 
   useEffect(() => {
-    const q = query.trim();
     if (q.length < 2) {
       setResults(null);
       setFailed(false);
+      setLoading(false);
       return;
     }
+    // Set before the debounce so stale results never show next to the new query
+    setLoading(true);
     let ignore = false;
     const timer = setTimeout(async () => {
       try {
@@ -43,13 +47,15 @@ export default function SearchBox({ onSelect }) {
         setFailed(false);
       } catch {
         if (!ignore) setFailed(true);
+      } finally {
+        if (!ignore) setLoading(false);
       }
     }, 300);
     return () => {
       ignore = true;
       clearTimeout(timer);
     };
-  }, [query]);
+  }, [q]);
 
   function clear() {
     setQuery("");
@@ -78,11 +84,21 @@ export default function SearchBox({ onSelect }) {
         )}
       </div>
 
-      {failed && <div className="dropdown dropdown-message">Search is unavailable. Try again.</div>}
-      {!failed && results?.length === 0 && (
-        <div className="dropdown dropdown-message">No places found.</div>
+      {loading && (
+        <div className="dropdown dropdown-message">Searching locations for “{q}”...</div>
       )}
-      {!failed && results?.length > 0 && (
+      {!loading && failed && (
+        <div className="dropdown dropdown-message">Search is unavailable. Try again.</div>
+      )}
+      {!loading && !failed && results?.length === 0 && (
+        <div className="dropdown dropdown-message">
+          <p className="dropdown-title">
+            No places found for “<span className="query">{q}</span>”
+          </p>
+          <p>Check the spelling or try another city.</p>
+        </div>
+      )}
+      {!loading && !failed && results?.length > 0 && (
         <div className="dropdown">
           <div className="dropdown-header">
             <span>Matching locations</span>

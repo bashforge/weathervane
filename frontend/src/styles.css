@@ -8,6 +8,7 @@
   --border: #E5E7EB;
   --tint: #EEF3FD;
   --brand-tint: #FDE2E2;
+  --shadow: 0 8px 24px rgb(0 0 0 / 8%);
 }
 
 *,
@@ -140,13 +141,27 @@ body {
   border: 1px solid var(--border);
   border-radius: 16px;
   background: var(--surface);
-  box-shadow: 0 8px 24px rgb(0 0 0 / 8%);
+  box-shadow: var(--shadow);
   overflow: hidden;
 }
 
 .dropdown-message {
   padding: 16px 24px;
   color: var(--muted);
+}
+
+.dropdown-message p {
+  margin: 0;
+}
+
+.dropdown-message .dropdown-title {
+  margin-bottom: 4px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.query {
+  color: var(--brand-dark);
 }
 
 .dropdown-header {
@@ -264,7 +279,7 @@ body {
   border: 1px solid var(--border);
   border-radius: 16px;
   background: var(--surface);
-  box-shadow: 0 8px 24px rgb(0 0 0 / 8%);
+  box-shadow: var(--shadow);
 }
 
 .card h2 {
@@ -295,14 +310,41 @@ body {
   background: var(--tint);
 }
 
-.card-region,
-.card-message {
+.card-region {
   margin: 0;
   color: var(--muted);
 }
 
-.card-message {
-  margin-top: 20px;
+.card-status {
+  margin: 0;
+  padding: 48px 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+.card-status h3 {
+  margin: 0 0 6px;
+  color: var(--ink);
+}
+
+.card-status p {
+  margin: 0;
+}
+
+.button {
+  margin-top: 16px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--surface);
+  background: var(--brand-dark);
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--brand);
 }
 
 .current {

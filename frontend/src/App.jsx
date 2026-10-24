@@ -24,7 +24,9 @@ function loadUnits() {
 }
 
 export default function App() {
-  const [locations, setLocations] = useState([]);
+  const [locations, setLocations] = useState(null);
+  const [loadFailed, setLoadFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   const [error, setError] = useState("");
   const [units, setUnits] = useState(loadUnits);
 
@@ -35,11 +37,16 @@ export default function App() {
   }, [units]);
 
   useEffect(() => {
+    setLoadFailed(false);
+    setLocations(null);
     fetch("/api/locations")
-      .then((response) => (response.ok ? response.json() : []))
+      .then((response) => {
+        if (!response.ok) throw new Error(`status ${response.status}`);
+        return response.json();
+      })
       .then(setLocations)
-      .catch(() => {});
-  }, []);
+      .catch(() => setLoadFailed(true));
+  }, [attempt]);
 
   async function handleSelect(place) {
     const { name, admin1, country, latitude, longitude, timezone } = place;
@@ -51,8 +58,12 @@ export default function App() {
       });
       if (!response.ok) throw new Error(`status ${response.status}`);
       const saved = await response.json();
-      // Saving a place twice returns the existing row, so match on id
-      setLocations((prev) => (prev.some((l) => l.id === saved.id) ? prev : [saved, ...prev]));
+      // Saving a place twice returns the existing row, so match on id.
+      // The list may still be loading (null) when a city is saved from search.
+      setLocations((prev) => {
+        const list = prev ?? [];
+        return list.some((l) => l.id === saved.id) ? list : [saved, ...list];
+      });
       setError("");
       return true;
     } catch {
@@ -110,7 +121,18 @@ export default function App() {
 
         <SearchBox onSelect={handleSelect} />
 
-        {locations.length === 0 ? (
+        {loadFailed ? (
+          <section className="empty">
+            <p>Couldn't load your saved cities.</p>
+            <button type="button" className="button" onClick={() => setAttempt((a) => a + 1)}>
+              Retry
+            </button>
+          </section>
+        ) : locations === null ? (
+          <section className="empty">
+            <p>Loading your cities...</p>
+          </section>
+        ) : locations.length === 0 ? (
           <section className="empty">
             <div className="empty-icon">{pinIcon}</div>
             <h2>Add your first city</h2>

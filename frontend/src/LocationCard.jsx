@@ -22,6 +22,7 @@ function dayLabel(date, index) {
 export default function LocationCard({ location, units, onRemove }) {
   const [forecast, setForecast] = useState(null);
   const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     let ignore = false;
@@ -41,7 +42,7 @@ export default function LocationCard({ location, units, onRemove }) {
     return () => {
       ignore = true;
     };
-  }, [location.id, units]);
+  }, [location.id, units, attempt]);
 
   return (
     <article className="card">
@@ -56,8 +57,16 @@ export default function LocationCard({ location, units, onRemove }) {
       <h2>{location.name}</h2>
       <p className="card-region">{[location.admin1, location.country].filter(Boolean).join(", ")}</p>
 
-      {failed && <p className="card-message">Forecast unavailable.</p>}
-      {!failed && !forecast && <p className="card-message">Loading forecast...</p>}
+      {failed && (
+        <div className="card-status">
+          <h3>Failed to load weather data</h3>
+          <p>Weather service is temporarily unavailable.</p>
+          <button type="button" className="button" onClick={() => setAttempt((a) => a + 1)}>
+            Retry
+          </button>
+        </div>
+      )}
+      {!failed && !forecast && <p className="card-status">Loading forecast...</p>}
       {forecast && <Forecast forecast={forecast} units={units} />}
     </article>
   );
