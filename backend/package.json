@@ -7,11 +7,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "express": "5.3.0"
+    "express": "5.3.0",
+    "pg": "8.23.1"
   },
   "devDependencies": {
     "@types/express": "5.0.6",
     "@types/node": "24.19.2",
+    "@types/pg": "8.23.1",
     "typescript": "7.0.2"
   }
 }
