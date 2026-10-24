@@ -1,7 +1,7 @@
 # Backlog
 
 Stories are worked in order and committed to main. Tags: v0.1.0 after WTHR-04,
-v0.2.0 after WTHR-10, v1.0.0 after WTHR-14.
+v0.2.0 after WTHR-10, v1.0.0 after WTHR-13.
 
 ## Backend
 - [ ] WTHR-01 Scaffold: three services (frontend, backend, db) start together.
@@ -13,9 +13,9 @@ v0.2.0 after WTHR-10, v1.0.0 after WTHR-14.
 - [ ] WTHR-03 Search places through the backend.
   - GET /api/geocode?q= returns up to 6 matches with name, region, country, and coordinates.
   - Queries under 2 characters return an empty list; Open-Meteo failures return a clear 502.
-- [ ] WTHR-04 Forecast endpoint with caching.
+- [ ] WTHR-04 Forecast endpoint.
   - GET /api/locations/:id/forecast?units= returns current conditions plus 7 days.
-  - Responses are cached for 10 minutes; unknown id returns 404.
+  - Unknown id returns 404; Open-Meteo failures return a clear 502.
 
 ## Frontend
 - [ ] WTHR-05 UI shell and theme: header, search bar, and empty state; styling through one set of theme tokens.
@@ -26,7 +26,6 @@ v0.2.0 after WTHR-10, v1.0.0 after WTHR-14.
 - [ ] WTHR-10 Loading, empty, and error states: one failing card does not affect the others; failed cards offer Retry.
 
 ## Quality and documentation
-- [ ] WTHR-11 Backend tests: validation, save/list/delete, duplicate handling, forecast route, error mapping, response mapping. Run without network or database via `docker compose run --rm backend npm test`.
-- [ ] WTHR-12 README: one-command start, architecture, technology choices, how to run tests, AI tools used, configuration overrides, what was left out and next steps.
+- [ ] WTHR-11 Backend tests: a few essential behavior tests (input validation, save and list, duplicate coordinates, delete), run in Docker with `docker compose run --rm backend npm test`.
+- [ ] WTHR-12 README: one-command start, architecture, technology choices and trade-offs, how to run tests, AI tools used, configuration overrides, what was left out and next steps.
 - [ ] WTHR-13 Fresh-clone verification: clone to a new folder, run `docker compose down -v` then `docker compose up --build`; the page loads, a saved city survives a restart, no configuration needed.
-- [ ] WTHR-14 Decisions and trade-offs notes in docs/DECISIONS.md.

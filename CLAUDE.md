@@ -12,10 +12,10 @@ Conventions
 - Everything runs in Docker; run tests with `docker compose run --rm backend npm test`.
 - Backend TypeScript: strict, simple, no enums; `import type` for types; `.ts` extensions in
   relative imports; `tsc --noEmit` must pass.
-- Small, readable code; explain non-obvious choices in docs/DECISIONS.md.
+- Small, readable code.
 
 Workflow
-- Stories WTHR-01..14 in docs/BACKLOG.md, worked in order and committed to main.
+- Stories WTHR-01..13 in docs/BACKLOG.md, worked in order and committed to main.
 - Commit format: "WTHR-<nn>: <short description>". Tests pass before commit.
 - Milestone tags: v0.1.0 (backend), v0.2.0 (UI), v1.0.0 (final).
 - Definition of done: `docker compose up --build` works from a fresh clone with no
