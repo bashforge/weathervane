@@ -22,7 +22,7 @@ v0.2.0 after WTHR-10, v1.0.0 after WTHR-13.
 - [x] WTHR-06 Search and save from the UI: debounced search, results dropdown, choosing a result adds a card without duplicates.
 - [x] WTHR-07 Forecast card: current conditions and a 7-day outlook for each saved location.
 - [x] WTHR-08 Remove a location: the card disappears immediately and stays gone after a refresh.
-- [ ] WTHR-09 Temperature unit toggle: °C/°F applies to all cards; the choice persists in the browser.
+- [x] WTHR-09 Temperature unit toggle: °C/°F applies to all cards; the choice persists in the browser.
 - [ ] WTHR-10 Loading, empty, and error states: one failing card does not affect the others; failed cards offer Retry.
 
 ## Quality and documentation

@@ -15,9 +15,24 @@ const pinIcon = (
   </svg>
 );
 
+function loadUnits() {
+  try {
+    return localStorage.getItem("units") === "imperial" ? "imperial" : "metric";
+  } catch {
+    return "metric";
+  }
+}
+
 export default function App() {
   const [locations, setLocations] = useState([]);
   const [error, setError] = useState("");
+  const [units, setUnits] = useState(loadUnits);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("units", units);
+    } catch {}
+  }, [units]);
 
   useEffect(() => {
     fetch("/api/locations")
@@ -63,8 +78,22 @@ export default function App() {
         <div className="container header-inner">
           <span className="app-name">Weathervane</span>
           <div className="unit-toggle" role="group" aria-label="Temperature unit">
-            <button type="button" aria-pressed="true" aria-label="Celsius">°C</button>
-            <button type="button" aria-pressed="false" aria-label="Fahrenheit">°F</button>
+            <button
+              type="button"
+              aria-pressed={units === "metric"}
+              aria-label="Celsius"
+              onClick={() => setUnits("metric")}
+            >
+              °C
+            </button>
+            <button
+              type="button"
+              aria-pressed={units === "imperial"}
+              aria-label="Fahrenheit"
+              onClick={() => setUnits("imperial")}
+            >
+              °F
+            </button>
           </div>
         </div>
       </header>
@@ -93,7 +122,7 @@ export default function App() {
               <LocationCard
                 key={location.id}
                 location={location}
-                units="metric"
+                units={units}
                 onRemove={handleRemove}
               />
             ))}
