@@ -26,6 +26,6 @@ v0.2.0 after WTHR-10, v1.0.0 after WTHR-13.
 - [x] WTHR-10 Loading, empty, and error states: one failing card does not affect the others; failed cards offer Retry.
 
 ## Quality and documentation
-- [ ] WTHR-11 Backend tests: a few essential behavior tests (input validation, save and list, duplicate coordinates, delete), run in Docker with `docker compose run --rm backend npm test`.
+- [x] WTHR-11 Backend tests: a few essential behavior tests (input validation, save and list, duplicate coordinates, delete), run in Docker with `docker compose run --rm backend npm test`.
 - [ ] WTHR-12 README: one-command start, architecture, technology choices and trade-offs, how to run tests, AI tools used, configuration overrides, what was left out and next steps.
 - [ ] WTHR-13 Fresh-clone verification: clone to a new folder, run `docker compose down -v` then `docker compose up --build`; the page loads, a saved city survives a restart, no configuration needed.
