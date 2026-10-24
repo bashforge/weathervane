@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import LocationCard from "./LocationCard.jsx";
 import SearchBox from "./SearchBox.jsx";
 
 const pinIcon = (
@@ -13,10 +14,6 @@ const pinIcon = (
     <circle cx="12" cy="9.5" r="2" fill="currentColor" />
   </svg>
 );
-
-function placeLabel(place) {
-  return [place.name, place.admin1, place.country].filter(Boolean).join(", ");
-}
 
 export default function App() {
   const [locations, setLocations] = useState([]);
@@ -40,7 +37,7 @@ export default function App() {
       if (!response.ok) throw new Error(`status ${response.status}`);
       const saved = await response.json();
       // Saving a place twice returns the existing row, so match on id
-      setLocations((prev) => (prev.some((l) => l.id === saved.id) ? prev : [...prev, saved]));
+      setLocations((prev) => (prev.some((l) => l.id === saved.id) ? prev : [saved, ...prev]));
       setSaveError(false);
       return true;
     } catch {
@@ -80,11 +77,11 @@ export default function App() {
             <p>Search above to save it and see its live forecast.</p>
           </section>
         ) : (
-          <ul className="saved">
+          <section className="cards">
             {locations.map((location) => (
-              <li key={location.id}>{placeLabel(location)}</li>
+              <LocationCard key={location.id} location={location} units="metric" />
             ))}
-          </ul>
+          </section>
         )}
       </main>
 

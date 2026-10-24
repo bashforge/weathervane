@@ -19,7 +19,7 @@ export async function createTable() {
 }
 
 export async function listLocations() {
-  const result = await pool.query("SELECT * FROM locations ORDER BY id");
+  const result = await pool.query("SELECT * FROM locations ORDER BY id DESC");
   return result.rows;
 }
 
