@@ -114,6 +114,152 @@ body {
   outline-offset: 0;
 }
 
+.search input {
+  padding-right: 60px;
+}
+
+.search-clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  font: inherit;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--muted);
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.dropdown {
+  margin-top: 12px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 8%);
+  overflow: hidden;
+}
+
+.dropdown-message {
+  padding: 16px 24px;
+  color: var(--muted);
+}
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 24px 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.dropdown-header span:first-child {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.dropdown ul {
+  margin: 0;
+  padding: 0 0 8px;
+  list-style: none;
+}
+
+.result {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 24px;
+  border: 0;
+  font: inherit;
+  text-align: left;
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+}
+
+.result:hover,
+.result:focus-visible {
+  background: var(--tint);
+}
+
+.result:focus-visible {
+  outline-offset: -2px;
+}
+
+.result-pin {
+  flex-shrink: 0;
+  color: var(--muted);
+}
+
+.result:hover .result-pin,
+.result:focus-visible .result-pin {
+  color: var(--brand);
+}
+
+.result-region {
+  flex: 1;
+  color: var(--muted);
+}
+
+.result-select {
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--surface);
+  background: var(--brand-dark);
+}
+
+/* Touch screens can't hover, so they always see the pill */
+@media (hover: hover) {
+  .result-select {
+    visibility: hidden;
+  }
+
+  .result:hover .result-select,
+  .result:focus-visible .result-select {
+    visibility: visible;
+  }
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 12px 16px;
+  border: 1px solid var(--brand-dark);
+  border-radius: 12px;
+  color: var(--brand-dark);
+  background: var(--brand-tint);
+}
+
+.banner button {
+  border: 0;
+  font: inherit;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--brand-dark);
+  background: transparent;
+  cursor: pointer;
+}
+
+.saved {
+  margin: 32px 0;
+  padding-left: 20px;
+}
+
+.saved li {
+  padding: 4px 0;
+}
+
 .empty {
   margin: 64px 0;
   text-align: center;
