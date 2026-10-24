@@ -17,7 +17,7 @@ const pinIcon = (
 
 export default function App() {
   const [locations, setLocations] = useState([]);
-  const [saveError, setSaveError] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetch("/api/locations")
@@ -38,11 +38,22 @@ export default function App() {
       const saved = await response.json();
       // Saving a place twice returns the existing row, so match on id
       setLocations((prev) => (prev.some((l) => l.id === saved.id) ? prev : [saved, ...prev]));
-      setSaveError(false);
+      setError("");
       return true;
     } catch {
-      setSaveError(true);
+      setError("Failed to save city. Please try again.");
       return false;
+    }
+  }
+
+  async function handleRemove(id) {
+    try {
+      const response = await fetch(`/api/locations/${id}`, { method: "DELETE" });
+      if (!response.ok) throw new Error(`status ${response.status}`);
+      setLocations((prev) => prev.filter((l) => l.id !== id));
+      setError("");
+    } catch {
+      setError("Failed to remove city. Please check your network and retry.");
     }
   }
 
@@ -59,10 +70,10 @@ export default function App() {
       </header>
 
       <main className="container">
-        {saveError && (
+        {error && (
           <div className="banner" role="alert">
-            <span>Failed to save city. Please try again.</span>
-            <button type="button" aria-label="Dismiss" onClick={() => setSaveError(false)}>
+            <span>{error}</span>
+            <button type="button" aria-label="Dismiss" onClick={() => setError("")}>
               ×
             </button>
           </div>
@@ -79,7 +90,12 @@ export default function App() {
         ) : (
           <section className="cards">
             {locations.map((location) => (
-              <LocationCard key={location.id} location={location} units="metric" />
+              <LocationCard
+                key={location.id}
+                location={location}
+                units="metric"
+                onRemove={handleRemove}
+              />
             ))}
           </section>
         )}

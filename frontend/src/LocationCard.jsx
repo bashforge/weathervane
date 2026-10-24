@@ -19,7 +19,7 @@ function dayLabel(date, index) {
   return new Date(date + "T00:00:00").toLocaleDateString(undefined, { weekday: "short" });
 }
 
-export default function LocationCard({ location, units }) {
+export default function LocationCard({ location, units, onRemove }) {
   const [forecast, setForecast] = useState(null);
   const [failed, setFailed] = useState(false);
 
@@ -45,6 +45,14 @@ export default function LocationCard({ location, units }) {
 
   return (
     <article className="card">
+      <button
+        type="button"
+        className="card-remove"
+        aria-label={`Remove ${location.name}`}
+        onClick={() => onRemove(location.id)}
+      >
+        ×
+      </button>
       <h2>{location.name}</h2>
       <p className="card-region">{[location.admin1, location.country].filter(Boolean).join(", ")}</p>
 
