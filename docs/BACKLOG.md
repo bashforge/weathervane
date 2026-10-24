@@ -1,0 +1,32 @@
+# Backlog
+
+Stories are worked in order and committed to main. Tags: v0.1.0 after WTHR-04,
+v0.2.0 after WTHR-10, v1.0.0 after WTHR-14.
+
+## Backend
+- [ ] WTHR-01 Scaffold: three services (frontend, backend, db) start together.
+  - `docker compose up --build` starts all three with no configuration; all report healthy.
+  - GET /api/health returns ok; the frontend loads at http://localhost:8080.
+- [ ] WTHR-02 Save and list locations.
+  - POST, GET, and DELETE /api/locations; saving the same coordinates twice returns the existing row.
+  - Saved data survives `docker compose restart`.
+- [ ] WTHR-03 Search places through the backend.
+  - GET /api/geocode?q= returns up to 6 matches with name, region, country, and coordinates.
+  - Queries under 2 characters return an empty list; Open-Meteo failures return a clear 502.
+- [ ] WTHR-04 Forecast endpoint with caching.
+  - GET /api/locations/:id/forecast?units= returns current conditions plus 7 days.
+  - Responses are cached for 10 minutes; unknown id returns 404.
+
+## Frontend
+- [ ] WTHR-05 UI shell and theme: header, search bar, and empty state; styling through one set of theme tokens.
+- [ ] WTHR-06 Search and save from the UI: debounced search, results dropdown, choosing a result adds a card without duplicates.
+- [ ] WTHR-07 Forecast card: current conditions and a 7-day outlook for each saved location.
+- [ ] WTHR-08 Remove a location: the card disappears immediately and stays gone after a refresh.
+- [ ] WTHR-09 Temperature unit toggle: °C/°F applies to all cards; the choice persists in the browser.
+- [ ] WTHR-10 Loading, empty, and error states: one failing card does not affect the others; failed cards offer Retry.
+
+## Quality and documentation
+- [ ] WTHR-11 Backend tests: validation, save/list/delete, duplicate handling, forecast route, error mapping, response mapping. Run without network or database via `docker compose run --rm backend npm test`.
+- [ ] WTHR-12 README: one-command start, architecture, technology choices, how to run tests, AI tools used, configuration overrides, what was left out and next steps.
+- [ ] WTHR-13 Fresh-clone verification: clone to a new folder, run `docker compose down -v` then `docker compose up --build`; the page loads, a saved city survives a restart, no configuration needed.
+- [ ] WTHR-14 Decisions and trade-offs notes in docs/DECISIONS.md.
