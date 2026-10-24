@@ -42,6 +42,14 @@ export async function saveLocation(
   return result.rows[0];
 }
 
+export async function getLocation(id: number) {
+  const result = await pool.query(
+    "SELECT name, latitude, longitude FROM locations WHERE id = $1",
+    [id],
+  );
+  return result.rows[0];
+}
+
 export async function removeLocation(id: number) {
   const result = await pool.query("DELETE FROM locations WHERE id = $1", [id]);
   return result.rowCount! > 0;

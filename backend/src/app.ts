@@ -1,5 +1,5 @@
 import express from "express";
-import { listLocations, removeLocation, saveLocation } from "./db.ts";
+import { getLocation, listLocations, removeLocation, saveLocation } from "./db.ts";
 
 export const app = express();
 app.use(express.json());
@@ -87,4 +87,35 @@ app.delete("/api/locations/:id", async (req, res) => {
     return;
   }
   res.status(204).end();
+});
+
+app.get("/api/locations/:id/forecast", async (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id) || id <= 0) {
+    res.status(400).json({ error: "id must be a positive integer" });
+    return;
+  }
+  const location = await getLocation(id);
+  if (!location) {
+    res.status(404).json({ error: "location not found" });
+    return;
+  }
+  let url =
+    `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}` +
+    "&timezone=auto&forecast_days=7" +
+    "&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,is_day" +
+    "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max";
+  if (req.query.units === "imperial") {
+    url += "&temperature_unit=fahrenheit&wind_speed_unit=mph";
+  }
+  let data: { current: unknown; daily: unknown };
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`status ${response.status}`);
+    data = await response.json();
+  } catch {
+    res.status(502).json({ error: "forecast service unavailable" });
+    return;
+  }
+  res.json({ name: location.name, current: data.current, daily: data.daily });
 });
