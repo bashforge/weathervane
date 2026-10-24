@@ -1,0 +1,153 @@
+:root {
+  --brand: #E1252A;
+  --brand-dark: #B3201F;
+  --ink: #111827;
+  --muted: #4B5563;
+  --bg: #FFFFFF;
+  --surface: #FFFFFF;
+  --border: #E5E7EB;
+  --tint: #EEF3FD;
+  --brand-tint: #FDE2E2;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.5;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.header {
+  background: var(--brand);
+  color: var(--surface);
+}
+
+.header :focus-visible {
+  outline-color: var(--surface);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.app-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.unit-toggle {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--surface);
+  border-radius: 999px;
+}
+
+.unit-toggle button {
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font: inherit;
+  font-weight: 700;
+  color: var(--surface);
+  background: transparent;
+  cursor: pointer;
+}
+
+.unit-toggle button[aria-pressed="true"] {
+  color: var(--brand);
+  background: var(--surface);
+}
+
+.search {
+  position: relative;
+  margin-top: 28px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+}
+
+.search input {
+  width: 100%;
+  padding: 16px 20px 16px 52px;
+  border: 1px solid var(--tint);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: var(--tint);
+}
+
+.search input::placeholder {
+  color: var(--muted);
+}
+
+.search input:focus-visible {
+  border-color: var(--brand);
+  outline-offset: 0;
+}
+
+.empty {
+  margin: 64px 0;
+  text-align: center;
+}
+
+.empty-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  color: var(--brand);
+  background: var(--brand-tint);
+}
+
+.empty h2 {
+  margin: 24px 0 8px;
+  font-size: 1.75rem;
+  letter-spacing: -0.02em;
+}
+
+.empty p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.footer {
+  padding: 32px 16px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.footer a {
+  color: var(--ink);
+}
